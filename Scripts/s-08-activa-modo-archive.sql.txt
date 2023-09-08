@@ -1,0 +1,61 @@
+--------Generar las carpetas---------
+
+cd unam-bda
+cd proyecto-final
+
+export ORACLE_SID=nuvaproy
+mkdir -p archivelogs/$ORACLE_SID/disk_a
+mkdir -p archivelogs/$ORACLE_SID/disk_b
+
+sudo chown -R oracle:oinstall
+
+chmod -R 750 archivelogs
+
+mkdir /unam-bda/proyecto-final/fra --Misma configuración de permisos
+
+------Realizar la configuración en el archivo de parámetros-----
+
+
+export ORACLE_SID=nuvaproy
+
+
+sqlplus sys/system2 as sysdba
+startup
+
+--Respaldo de pfile
+create pfile from spfile;
+
+alter system set log_archive_max_processes=5  scope=spfile;
+
+alter system set log_archive_dest_1='LOCATION=/unam-bda/proyecto-final/archivelogs/nuvaproy/disk_a MANDATORY' scope=spfile;
+alter system set log_archive_dest_2='LOCATION=/unam-bda/proyecto-final/archivelogs/nuvaproy/disk_b' scope=spfile;
+alter system set log_archive_dest_3='LOCATION=USE_DB_RECOVERY_FILE_DEST' scope=spfile;
+
+
+alter system set log_archive_format='arch_nuvaproy_%t_%s_&r.arc' scope=spfile';
+
+alter system set log_archive_min_succeed_dest=1 scope=spfile;
+
+shutdown immediate
+
+startup mount
+
+alter database archivelog;
+
+alter database open;
+
+------------------- Ya con esto la base está en modo archive, ahora habilitando la FRA
+
+sqlplus sys/system2 as sysdba
+
+alter system set DB_RECOVERY_FILE_DEST_SIZE=10G scope=spfile;
+
+alter system set DB_RECOVERY_FILE_DEST='/unam-bda/proyecto-final/fra' scope=spfile;
+
+rman
+
+connect target "sys@nuvaproy as sysdba"
+
+configure controlfile autobackup format for device type disk clear;
+configure log_archive_dest_n='LOCATION=USE_DB_RECOVERY_FILES_DEST';
+configure retention policy to recovery window of 7 days; ---Realizar respaldos

@@ -1,0 +1,10 @@
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (1, 'Julie');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (2, 'Stevana');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (3, 'Annemarie');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (4, 'Eugenio');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (5, 'Hester');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (6, 'Lars');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (7, 'Obediah');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (8, 'Joscelin');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (9, 'Carrol');
+insert into sys_producto.estatus_producto (ESTATUS_PRODUCTO_ID, NOMBRE) values (10, 'Jermaine');
